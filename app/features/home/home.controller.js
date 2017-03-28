@@ -1,60 +1,59 @@
-
 (function() {
     'use strict';
-
     angular
         .module('app')
-      .controller('HomeController', HomeController);
+        .controller('HomeController', HomeController);
 
-    HomeController.$inject = ['$scope', 'homeService','$state', 'Spotify'];
+    HomeController.$inject = ['homeService', '$state', 'Spotify'];
 
-    function HomeController($scope, homeService,$state, Spotify) {
-      var options={
-        locale: "nl_NL",
-        country: "NL"
-      };
+    function HomeController(homeService, $state, Spotify) {
+        var homeCtrl = this;
 
-      $scope.login=function() {
-        Spotify.login().then(function(data){
-          Spotify.getFeaturedPlaylists(options).then(function(playlistData){
-            console.log(playlistData);
-          });
-        });
-      };
+        var options = {
+            locale: "nl_NL",
+            country: "NL"
+        };
 
-      $scope.placeholder = "Search for Artists or Albums";
-      $scope.stringLimit = 10;
+        homeCtrl.login = function() {
+            Spotify.login().then(function(data) {
+                Spotify.getFeaturedPlaylists(options).then(function(playlistData) {
+                    console.log(playlistData);
+                });
+            });
+        };
 
-      $scope.search = function (keywords) {
-        if (keywords) {
-          homeService.search($scope.searchTxt).then(function (res) {
-            $scope.searchResults = res;
-            $scope.albumList = $scope.searchResults.albums.items;
-            $scope.artistList = $scope.searchResults.artists.items;
-            console.log($scope.searchResults);
-          });
-        } else {
-          $scope.searchResults = null;
-        }
-      };
 
-      $scope.artist=function(){
-        $state.go('artist');
-      };
+        homeCtrl.placeholder = "Search for Artists or Albums";
+        homeCtrl.stringLimit = 10;
 
-      $scope.searchArtist = function(artist){
-        var artistId = artist.id;
+        homeCtrl.search = function(keywords) {
+            if (keywords) {
+                homeService.search(homeCtrl.searchTxt).then(function(res) {
+                    homeCtrl.searchResults = res;
+                    homeCtrl.albumList = homeCtrl.searchResults.albums.items;
+                    homeCtrl.artistList = homeCtrl.searchResults.artists.items;
+                    console.log(homeCtrl.searchResults);
+                });
+            } else {
+                homeCtrl.searchResults = null;
+            }
+        };
 
-        $state.go('artist', {
-          'artistId' : artistId
-        });
+        homeCtrl.artist = function() {
+            $state.go('artist');
+        };
 
-      };
+        homeCtrl.searchArtist = function(artist) {
+            var artistId = artist.id;
 
-      $scope.searchAlbum = function(album){
-        var  albumId = album.id;
-      };
+            $state.go('artist', {
+                'artistId': artistId
+            });
+        };
 
+        homeCtrl.searchAlbum = function(album) {
+            var albumId = album.id;
+        };
     }
 
 })();

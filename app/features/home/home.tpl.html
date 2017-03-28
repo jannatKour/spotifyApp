@@ -1,47 +1,43 @@
+<body>
 
-<nav class="navbar navbar-inverse">
+    <nav class="navbar navbar-inverse">
 
-<button  class="btn btn-danger" ng-click="login()">Authenticate</button>
-<button class="btn btn-danger" ng-click="artist()">Search Artists</button>
-<button class="btn btn-danger" ng-click="album()">Search Albums</button>
-<button class="btn btn-danger" ng-click="songs()">Search songs</button>
-</nav>
+        <button class="btn btn-danger" ng-click="homeCtrl.login()">Authenticate</button>
 
+    </nav>
 
-  <div class="container">
-    <h1>Music Avenue</h1>
-       <form class="form-group">
-          <input type="text" class="form-control" placeholder="{{placeholder}}" ng-model="searchTxt" ng-keyup="search(searchTxt)" />
-       </form>
-  </div>
-  <div class="row" ng-if="searchResults">
-    <div class="col-xs-12">
-       <div class="well" ng-if="albumList">
-          <h3 class="text-success">Albums</h3>
-       </div>
-       <div ng-repeat="album in albumList">
-          <a class="col-xs-3 div-thumbnail" ng-click="searchAlbum(album)">
-            <img class="img-thumbnail thumbnail" ng-src="{{album.images[1].url}}" />
-            <span class="text-primary">{{album.name | limitTo:stringLimit}}</span>
-          </a>
-       </div>
+    <div class="container">
+        <h1>Music Avenue</h1>
+        <form class="form-group">
+            <input type="text" class="form-control" placeholder="{{homeCtrl.placeholder}}" ng-model="homeCtrl.searchTxt" ng-keyup="homeCtrl.search(homeCtrl.searchTxt)" />
+        </form>
     </div>
-    <div class="col-xs-12">
-      <div class="well" ng-if="artistList">
-         <h3 class="text-success">Artists</h3>
-      </div>
-      <div ng-repeat="artist in artistList">
-         <a class="col-xs-3 div-thumbnail" ng-click="searchArtist(artist)">
-            <img class="img-thumbnail thumbnail" ng-src="{{artist.images[1].url}}" />
-            <span class="text-primary">{{artist.name | limitTo:stringLimit}}</span>
-         </a>
-      </div>
-   </div>
-</div>
 
-  <br>
+    <div class="row" ng-if="homeCtrl.searchResults">
+        <div class="col-xs-12">
+            <div class="well" ng-if="homeCtrl.albumList">
+                <h3 class="text-success">Albums</h3>
+            </div>
 
-</div>
+            <div ng-repeat="album in homeCtrl.albumList">
+                <a class="col-xs-3 div-thumbnail">
+                    <img class="img-thumbnail thumbnail" ng-src="{{album.images[1].url}}" />
+                    <span class="text-primary">{{album.name | limitTo:homeCtrl.stringLimit}}</span>
+                </a>
+            </div>
+        </div>
+
+        <div class="col-xs-12">
+            <div class="well" ng-if="homeCtrl.artistList">
+                <h3 class="text-success">Artists</h3>
+            </div>
+
+            <div ng-repeat="artist in homeCtrl.artistList">
+                <a class="col-xs-3 div-thumbnail" ng-click="homeCtrl.searchArtist(artist)">
+                    <img class="img-thumbnail thumbnail" ng-src="{{artist.images[1].url}}" />
+                    <span class="text-primary">{{artist.name | limitTo:homeCtrl.stringLimit}}</span>
+                </a>
+            </div>
+        </div>
+    </div>
 </body>
-  <!-- </div>
-</div> -->

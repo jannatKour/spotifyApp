@@ -1,26 +1,28 @@
 <!doctype html>
 <html>
-  <head>
+
+<head>
     <meta charset="utf-8">
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- CSS files -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
-    <link rel="stylesheet" href="./app/styles/main.css" type="text/css" media="all" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="app/styles/main.css" type="text/css" media="all" />
 
     <title>Spotify Search Assignment</title>
-  </head>
-    <body ng-app="app"  >
+</head>
+
+<body ng-app="app">
 
 
     <div class="container">
-    <div ui-view></div>
+        <div ui-view></div>
 
     </div>
 
     <div class="footer">
-      <!--Put a footer if required-->
+        <!--Put a footer if required-->
     </div>
 
     <!-- scripts -->
@@ -34,16 +36,18 @@
 
     <!-- Features -->
 
-    <!-- Controllers -->
+    <!-- home -->
     <script src="app/features/home/home.controller.js"></script>
-    <script src="app/features/artists/artist.controller.js"></script>
-
-    <!-- Services -->
-    <script src="app/features/artists/artist.service.js"></script>
     <script src="app/features/home/home.services.js"></script>
+
+    <!-- artist -->
+    <script src="app/features/artists/artist.controller.js"></script>
+    <script src="app/features/artists/artist.service.js"></script>
+
 
 
     <!-- <script src="app/callback_controller.js"></script> -->
 
 </body>
+
 </html>
