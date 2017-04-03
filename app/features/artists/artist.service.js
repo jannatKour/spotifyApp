@@ -5,26 +5,29 @@
         .module('app')
         .factory('artistService', artistService);
 
-    artistService.$inject = ['$http', 'Spotify', '$q'];
+    artistService.$inject = ['$http', 'Spotify'];
 
     /* @ngInject */
-    function artistService($http, Spotify, $q) {
+    function artistService($http, Spotify) {
         var service = {
-            getArtist: getArtist
-        };
+            getArtist: getArtist,
+            getArtistAlbums: getArtistAlbums,
+            getArtistTopTracks: getArtistTopTracks
+        },
+        country='US';
 
         return service;
 
         function getArtist(artistId) {
-            var defer = $q.defer();
+            return Spotify.getArtists(artistId);
+        }
 
-            Spotify.getArtists(artistId).then(function(artist) {
-                defer.resolve(artist);
-            }, function(error) {
-                defer.reject(error);
-            });
+        function getArtistAlbums(artistId) {
+            return Spotify.getArtistAlbums(artistId);
+        }
 
-            return defer.promise;
+        function getArtistTopTracks(artistId) {
+            return Spotify.getArtistTopTracks(artistId,country);
         }
     }
 })();

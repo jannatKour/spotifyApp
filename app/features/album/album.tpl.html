@@ -1,0 +1,26 @@
+<h1>Album Details</h1>
+
+<div ng-if="albumCtrl.albumName">
+
+    <h3>Name: {{albumCtrl.albumName}}</h3>
+    <h4>Artist: {{albumCtrl.albumArtist}}
+    <h4>Popularity: {{albumCtrl.albumPopularity}}</h4>
+    <h4>Release date: {{albumCtrl.albumRelease_date}}</h4>
+    <img class="img-thumbnail thumbnail" ng-src="{{albumCtrl.albumImage}}" />
+
+</div>
+
+<h2>Album Tracks</h2>
+
+<table class="table table-bordered" ng-if="albumCtrl.tracks">
+    <tr>
+        <th> No.</th>
+        <th> Name </th>
+        <th> Controls </th>
+    </tr>
+    <tr ng-repeat="track in albumCtrl.tracks">
+        <td>{{ track.track_number }}</td>
+        <td>{{track.name }}</td>
+        <td><button style="align-content:center;color:black" ng-click="albumCtrl.play(track.id)"> Play Song Preview </button> </td>
+    </tr>
+</table>

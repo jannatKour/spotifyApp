@@ -20,7 +20,7 @@
             </div>
 
             <div ng-repeat="album in homeCtrl.albumList">
-                <a class="col-xs-3 div-thumbnail">
+                <a class="col-xs-3 div-thumbnail" ng-click="homeCtrl.searchAlbum(album)">
                     <img class="img-thumbnail thumbnail" ng-src="{{album.images[1].url}}" />
                     <span class="text-primary">{{album.name | limitTo:homeCtrl.stringLimit}}</span>
                 </a>

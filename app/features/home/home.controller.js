@@ -53,6 +53,10 @@
 
         homeCtrl.searchAlbum = function(album) {
             var albumId = album.id;
+
+            $state.go('album',{
+                'albumId':albumId
+            });
         };
     }
 

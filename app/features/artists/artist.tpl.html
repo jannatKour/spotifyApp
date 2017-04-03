@@ -1,9 +1,35 @@
-<h1>Artists</h1>
+<h1>Artist Detail</h1>
 
-<div>
+<div ng-if="artistCtrl.artist">
 
-    <ul>
-        <li ng-repeat="artist in artist.artistList">{{artist}}</li>
-    </ul>
+    <h3>Name: {{artistCtrl.artist.name}}</h3>
+    <img class="img-thumbnail thumbnail" ng-src="{{artistCtrl.artist.images[2].url}}" />
+    <h4>Popularity: {{artistCtrl.artist.popularity}}</h4>
+    <h4>Followers: {{artistCtrl.artist.followers.total}}</h4>
+    <br>
 
+    <h2> Famous Albums by {{artistCtrl.artist.name}} </h2>
+    <slick class="slides" data="artistCtrl.artistAlbums" settings="artistCtrl.slickPanels">
+        <div ng-repeat="album in artistCtrl.artistAlbums">
+            <div class="slide" ng-if="artistCtrl.viewLoaded">
+                <div><img ng-src="{{album.images[1].url}}" class="img-responsive" ng-click="artistCtrl.Songs(album.id)"></div>
+            </div>
+        </div>
+    </slick>
+    <br>
+    <h2> Top Tracks by {{artistCtrl.artist.name}}</h2>
+    <slick class="slides" data="artistCtrl.tracks" settings="artistCtrl.slickPanels">
+        <div ng-repeat="track in artistCtrl.tracks">
+            <div class="slide" ng-if="artistCtrl.viewLoaded">
+                <div><img ng-src="{{track.album.images[1].url}}" class="img-responsive"></div>
+            </div>
+        </div>
+    </slick>
+    <br>
+</div>
+
+<div ng-if="!artistCtrl.artist">
+    <div class="well well-danger">
+        <span> Artist not found </span>
+    </div>
 </div>

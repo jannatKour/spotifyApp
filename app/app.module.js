@@ -3,7 +3,8 @@
     angular
         .module('app', [
             'ui.router',
-            'spotify'
+            'spotify',
+            'slickCarousel'
         ])
         .config(homeConfig);
 
@@ -29,7 +30,19 @@
                 params: {
                     'artistId': ''
                 }
+            })
+            .state('album', {
+                url: '/album',
+                templateUrl: 'app/features/album/album.tpl.html',
+                controller: 'AlbumController',
+                controllerAs: 'albumCtrl',
+                params: {
+                    'albumId': ''
+                }
             });
+
+
+
 
         SpotifyProvider.setClientId('b9dfe344d69249b8bd770d1b892f96a1');
         SpotifyProvider.setRedirectUri('http://localhost:3001/callback.html');
