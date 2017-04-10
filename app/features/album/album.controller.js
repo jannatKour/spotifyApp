@@ -5,11 +5,12 @@
         .module('app')
         .controller('AlbumController', AlbumController);
 
-    AlbumController.$inject = ['albumService', '$state', 'Spotify'];
+    AlbumController.$inject = ['albumService', '$state', 'Spotify', 'ngAudio'];
 
     /* @ngInject */
-    function AlbumController(albumService, $state, Spotify) {
-        var albumCtrl = this;
+    function AlbumController(albumService, $state, Spotify, ngAudio) {
+        var albumCtrl = this,
+          trackObj = {};
 
         function getAlbum() {
             albumService.getAlbum($state.params.albumId).then(function(album) {
@@ -33,16 +34,26 @@
             });
         }
 
-        albumCtrl.play= function(trackId){
-
-            albumService.getTrackAudioFeatures(trackId).then(function (data) {
-              console.log(data);
-            } , function(error) {
-              console.log("No data found");
-            });
+        albumCtrl.songInfo = function (track) {
+          albumCtrl.audio = ngAudio.load(track.preview_url);
+          console.log('trackObj', albumCtrl.audio);
+          albumCtrl.btnName="Play Song";
         };
+
+        albumCtrl.Play = function () {
+        if(albumCtrl.audio.paused)
+        {
+          albumCtrl.audio.play();
+          albumCtrl.btnName= "Pause Song";
+        }
+        else {
+          albumCtrl.audio.pause();
+          albumCtrl.btnName= "Play Song";
+        }
+    };
 
         getAlbum();
         getAlbumTracks();
-    }
+
+  }
 })();

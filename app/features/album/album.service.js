@@ -12,7 +12,6 @@
         var service = {
             getAlbum: getAlbum,
             getAlbumTracks: getAlbumTracks,
-            getTrackAudioFeatures : getTrackAudioFeatures
         };
 
         return service;
@@ -24,9 +23,5 @@
         function getAlbumTracks(albumId){
           return Spotify.getAlbumTracks(albumId);
         }
-
-        function getTrackAudioFeatures(trackId){
-        return Spotify.getTrackAudioFeatures(trackId);
-        }
-       }
+      }
   })();

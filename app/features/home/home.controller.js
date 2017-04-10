@@ -4,9 +4,9 @@
         .module('app')
         .controller('HomeController', HomeController);
 
-    HomeController.$inject = ['homeService', '$state', 'Spotify'];
+    HomeController.$inject = ['homeService', '$state', 'Spotify', 'storageService'];
 
-    function HomeController(homeService, $state, Spotify) {
+    function HomeController(homeService, $state, Spotify, storageService) {
         var homeCtrl = this;
 
         var options = {
@@ -33,11 +33,18 @@
                     homeCtrl.albumList = homeCtrl.searchResults.albums.items;
                     homeCtrl.artistList = homeCtrl.searchResults.artists.items;
                     console.log(homeCtrl.searchResults);
+                    storageService.setSearchTxt(homeCtrl.searchTxt);
                 });
             } else {
                 homeCtrl.searchResults = null;
             }
         };
+
+        homeCtrl.searchTxt = storageService.getSearchTxt();
+
+        if(!angular.isUndefined(homeCtrl.searchTxt) && homeCtrl.searchTxt !== ""){
+          homeCtrl.search(homeCtrl.searchTxt);
+        }
 
         homeCtrl.artist = function() {
             $state.go('artist');
@@ -47,7 +54,8 @@
             var artistId = artist.id;
 
             $state.go('artist', {
-                'artistId': artistId
+                'artistId': artistId,
+                'searchTxt': homeCtrl.searchTxt
             });
         };
 
@@ -55,7 +63,8 @@
             var albumId = album.id;
 
             $state.go('album',{
-                'albumId':albumId
+                'albumId':albumId,
+                'searchTxt': homeCtrl.searchTxt
             });
         };
     }

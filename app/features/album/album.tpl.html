@@ -1,26 +1,39 @@
-<h1>Album Details</h1>
+<button onclick="goBack()">Go Back</button>
 
-<div ng-if="albumCtrl.albumName">
+<h1 style="color:#ff531a;text-decoration:underline;text-align:center" ng-click="albumCtrl.goBack()">Album Details</h1><hr>
 
-    <h3>Name: {{albumCtrl.albumName}}</h3>
-    <h4>Artist: {{albumCtrl.albumArtist}}
-    <h4>Popularity: {{albumCtrl.albumPopularity}}</h4>
-    <h4>Release date: {{albumCtrl.albumRelease_date}}</h4>
-    <img class="img-thumbnail thumbnail" ng-src="{{albumCtrl.albumImage}}" />
+<div style="font-style:italic" class="clearfix" style="color:#ff794d" ng-if="albumCtrl.albumName">
+
+    <img style="float:right" class="img-thumbnail thumbnail" ng-src="{{albumCtrl.albumImage}}" />
+    <h3 style="color:#ff794d">Name: {{albumCtrl.albumName}}</h3>
+    <h3 style="color:#ff794d">Artist: {{albumCtrl.albumArtist}}</h3>
+    <h3 style="color:#ff794d">Popularity: {{albumCtrl.albumPopularity}}</h3>
+    <h3 style="color:#ff794d">Release date: {{albumCtrl.albumRelease_date}}</h3>
 
 </div>
 
-<h2>Album Tracks</h2>
+<h2 style="color:#ff794d">Album Tracks</h2>
 
-<table class="table table-bordered" ng-if="albumCtrl.tracks">
-    <tr>
-        <th> No.</th>
-        <th> Name </th>
-        <th> Controls </th>
-    </tr>
-    <tr ng-repeat="track in albumCtrl.tracks">
-        <td>{{ track.track_number }}</td>
-        <td>{{track.name }}</td>
-        <td><button style="align-content:center;color:black" ng-click="albumCtrl.play(track.id)"> Play Song Preview </button> </td>
-    </tr>
-</table>
+<div ng-if="albumCtrl.tracks||albumCtrl.albumName">
+    <div class="list-group-item list-group-item-info" ng-repeat="track in albumCtrl.tracks">
+          <button style="color:#1b357e;font-weight:bold;font-style:italic;font-size:18px" class="btn btn-warning list-group-item" data-toggle="collapse" data-target="#{{track.id}}" ng-click="albumCtrl.songInfo(track)">
+              {{track.track_number}}&nbsp;&nbsp;
+              {{track.name}}
+            </button>
+            <div class="collapse" id="{{track.id}}"><br>
+                <div class="row">
+                  <div class="col-xs-1"></div>
+                    <div class="col-xs-5" style="color:#ff531a;font-weight:bold;font-size:16px;letter-spacing:2px;">
+                        Artist: {{track.artists["0"].name}}<br>
+                        Album: {{albumCtrl.albumName}}<br>
+                        Duration: {{track.duration_ms}} milliseconds<br>
+                    </div>
+                    <div class="col-xs-5">
+                      <button class="btn btn-lg btn-warning pull-right" ng-click="albumCtrl.Play()">
+                        {{albumCtrl.btnName}}
+                      </button>
+                    </div>
+                </div><br>
+            </div>
+        </div>
+</div>

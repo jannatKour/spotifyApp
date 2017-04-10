@@ -5,12 +5,14 @@
       .module('app')
       .controller('ArtistController', ArtistController);
 
-    ArtistController.$inject = ['artistService', '$state', 'Spotify', '$timeout'];
+    ArtistController.$inject = ['artistService', '$state', 'Spotify', '$timeout', 'ngAudio'];
 
 
-    function ArtistController(artistService, $state, Spotify, $timeout) {
+    function ArtistController(artistService, $state, Spotify, $timeout, ngAudio) {
 
-      var artistCtrl = this;
+      var artistCtrl = this,
+      trackObject={},
+      isPlaying = false;
 
       artistCtrl.slickPanels = {
         method: {},
@@ -34,6 +36,7 @@
         artistService.getArtist($state.params.artistId).then(function(artist) {
           artistCtrl.artist = artist.artists[0];
             console.log(artistCtrl.artist);
+
          }, function(error) {
             console.log('artists retrieval failed ');
           });
@@ -57,19 +60,34 @@
 
         artistService.getArtistTopTracks($state.params.artistId).then(function(tracks){
           artistCtrl.tracks = tracks.tracks;
-          //console.log(tracks);
+          console.log(tracks);
+
           $timeout(function() {
             artistCtrl.viewLoaded = true;
           });
         },function(error){
           console.log('No data found');
-        });
+          });
       }
 
       artistCtrl.Songs = function(albumId){
         $state.go('album',{
-            'albumId':albumId
+            'albumId':albumId,
+            'searchTxt': $state.params.searchTxt,
+            'artistId': $state.params.artistId
         });
+      };
+
+      artistCtrl.trackInfo = function(track){
+        artistCtrl.audio = ngAudio.load(track.preview_url);
+        console.log('trackObject', artistCtrl.audio);
+        if(isPlaying) {
+          artistCtrl.audio.pause();
+          isPlaying = false;
+        } else {
+          artistCtrl.audio.play();
+          isPlaying = true;
+        }
       };
 
         getArtist();
